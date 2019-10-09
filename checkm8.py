@@ -236,6 +236,12 @@ def payload(cpid):
     assert len(s5l8960x_shellcode) <= PAYLOAD_OFFSET_ARM64
     assert len(s5l8960x_handler) <= PAYLOAD_SIZE_ARM64
     return s5l8960x_shellcode + '\0' * (PAYLOAD_OFFSET_ARM64 - len(s5l8960x_shellcode)) + s5l8960x_handler
+  #if cpid == 0x8000:
+  #  constants_usb_s8000 = [
+  #             0x800000000, # 1 - LOAD_ADDRESS
+  #             
+  # ]
+    
   if cpid == 0x8002:
     constants_usb_t8002 = [
                 0x48818000, # 1 - LOAD_ADDRESS
